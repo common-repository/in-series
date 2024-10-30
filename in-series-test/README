@@ -1,0 +1,18 @@
+In order to run these tests, you will need the latest CVS version of SimpleTest
+(and either place that directory in this directory and call it "simpletest", or
+make a symlink named "simpletest" pointing to that directory).
+
+Note that I run with local modifications to SimpleTest, so things may not work
+out 100% perfect for you. This might be fixed in the future. :)
+
+Additionally, WordPress has some bugs (gasp!). The default theme needs to be
+hacked a bit so that the pages generate valid XHTML. Specifically, for all
+versions 2.0+ (at least), search the theme for all instances of "Permanent
+Link". Replace the immediately following occurrence of <?php the_title() ?>
+with <?php echo htmlspecialchars(strip_tags(get_the_title()), ENT_QUOTES); ?>.
+In WordPress 2.0, you will need to make one further hack -- in
+wp-admin/admin-functions.php, search for "tinyMCE.configs.length". Add
+<![CDATA[ immediately after the opening <script> tag for that block, and ]]>
+immediately before the ending </script> of that block. These modifications
+should allow the pages to validate, or at least get close enough to
+well-formedness to allow the automated testing to work.
